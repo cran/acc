@@ -1,0 +1,13 @@
+58dd0e7db941a41447dcfd394b50b4b5 *DESCRIPTION
+58082afff569f9e44fcda8aa60c6bb2f *NAMESPACE
+bc980b744ea660eae68cc7d8e410eabc *R/acc.R
+5e86b92355f4431c293b2a50d849955f *R/plotAcc.R
+ac8a96d1122765b05660b52256c6c473 *R/readRaw.R
+e03b7120d455fb7bf23d11c8ec5af0b8 *R/rtb.R
+ef458ff17bd9fbefcc46cafc14516cbb *R/simAcc.R
+8b2db9912b5de45d987a3d8e1cbaede3 *man/acc-package.Rd
+d9cc6894f3e5ce56c3545ba25e674720 *man/acc.Rd
+8ef87b2cabd63bdfe3594c4579b24080 *man/plotAcc.Rd
+fceb7c7ddf070f900fbe891dd5671636 *man/readRaw.Rd
+585ca38fa8efda3973f194d2ec84841d *man/rtb.Rd
+aea38030e9d6c28fab9f01c61d66bbe2 *man/simAcc.Rd
