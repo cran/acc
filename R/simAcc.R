@@ -26,6 +26,6 @@ simAcc <- function(minutes,mvpaLevel,seedset=1234){
   b <- list(mu = c(0, 30, 2500), sigma = c(0, 30, 1000))
   model <- hmmspec(init = initial, trans = P, parms.emission = b,dens.emission = dnorm.hsmm)
   train <- simulate(model, nsim = (minutes), seed = seedset, rand.emission = rnorm.hsmm)
-  counts <- data.frame(TimeStamp = randomTime[1:minutes], counts = train$x)
+  counts <- data.frame(TimeStamp = randomTime[1:minutes], counts = round(train$x,0))
   counts
 }

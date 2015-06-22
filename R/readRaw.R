@@ -39,12 +39,13 @@ readRaw <- function(filename){
   ep = as.numeric(as.difftime(c(epochTime),units = "secs"))
   
   deviceName = gsub("------------ Data File Created By ActiGraph ", "", lines[startDPos])
-  deviceName = substr(deviceName, 1,4)
+  deviceName = head(strsplit(deviceName,split=" ")[[1]],1)
   
   serialNumber = gsub("Serial Number: ", "", lines[startSPos])
   type <- NA
   if(deviceName == "GT1M"){type <- "uni-axial"}
   if(deviceName == "GT3X"){type <- "tri-axial"}
+  if(deviceName == "GT3XPlus"){type <- "tri-axial"}
   
   cat(noquote(paste("Raw data read for ",deviceName," device. This is a ",type," device.",sep=""))) 
   cat("\n")
@@ -56,33 +57,46 @@ readRaw <- function(filename){
   startline = skipPos+1
   endline = length(lines)
   
-  rawdata = c()
+  col0 = gsub("[[:blank:]]+", " ",lines[startline])
+  col = strsplit(col0, " ")[[1]]
+  col = length(col[col != ""])
+  
   timeline = c()
-  for(i in startline: endline){
+  mymatrix <- matrix(NA,(endline-startline+1),col) 
+  for(i in startline:endline){
     temp0 = gsub("[[:blank:]]+", " ",lines[i])
     temp = strsplit(temp0, " ")[[1]]
-    temp = temp[temp != ""]
-    rawdata = c(rawdata, temp)
+    temp = temp[temp != ""] 
+    if(length(temp)>0){mymatrix[(i-startline+1),1:length(temp)] <- temp}
   }
   
-  counts = as.numeric(as.vector(rawdata))
+  counts = as.numeric(as.vector(t(mymatrix)))
+  counts <- counts[!is.na(counts)]
   
   if(type=="uni-axial"){
-    timeline = (0:as.integer(length(rawdata)-1)*ep)
-    rawTimeStamp = rep(rawTimeStamp1, length(rawdata))
+    timeline = (0:as.integer((length(counts))/3-1)*ep)
+    rawTimeStamp = rep(rawTimeStamp1, (length(counts))/3)
     rst = gsub(" GMT", "", as.POSIXlt(rawTimeStamp, tz = "GMT")+ timeline)
     data = data.frame(TimeStamp = as.vector(rst), counts = counts)
   }
   
   if(type=="tri-axial"){
-    n <- length(rawdata)/3
+    n <- length(counts)
     x = counts[seq(1, n, 3)] 
     y = counts[seq(2, n, 3)] 
     z = counts[seq(3, n, 3)] 
-    timeline = (0:as.integer((length(rawdata))/3-1)*ep)
-    rawTimeStamp = rep(rawTimeStamp1, length(rawdata)/3)
-    rst = gsub(" GMT", "", as.POSIXlt(rawTimeStamp, tz = "GMT")+ timeline)
-    data = data.frame(TimeStamp = as.vector(rst), x = x, y = y, z = z)
+    
+    maxlength <- max(length(x),length(y),length(z))
+    
+    if(length(x)<maxlength){x<-c(x,NA)}
+    if(length(y)<maxlength){y<-c(y,NA)} 
+    if(length(z)<maxlength){z<-c(z,NA)}
+    
+    timeline = (0:(maxlength-1)*ep) 
+    rawTimeStamp = rep(rawTimeStamp1, maxlength)  
+    rst = gsub(" GMT", "", as.POSIXlt(rawTimeStamp, tz = "GMT")+ timeline) 
+    
+    data = data.frame(TimeStamp = as.vector(rst), x = x, y = y, z = z) 
   }
   
   data

@@ -1,7 +1,7 @@
 \name{readRaw}
 \alias{readRaw}
 \title{
-readRaw
+Reads raw files
 }
 \description{
 Reads raw files in .dat format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.

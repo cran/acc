@@ -1,15 +1,15 @@
-\name{acc}
-\alias{acc}
+\name{accsummary}
+\alias{accsummary}
 \title{
-Summarizes accelerometer data for multiple types of physical activities
+Summarizes accelerometer data for a single type of physical activity
 }
 \description{
-Summarizes accelerometer for multiple types of physical activities
+Summarizes accelerometer data for a single type of physical activity. Functionality is same as function acc, except that this function provides a summary for a singly type of physical activity, with more detailed information.
 }
 
 \usage{
-acc(data, tri, axis, spuriousDef, nonwearDef, minWear,
-    patype, pacut, boutsize, tolerance)
+accsummary(data, tri, axis, spuriousDef, nonwearDef, minWear,
+    patype, pacut, boutsize, tolerance, returnbout)
 }
 
 
@@ -21,15 +21,20 @@ acc(data, tri, axis, spuriousDef, nonwearDef, minWear,
   \item{spuriousDef}{Definition of spurious observation. Defined as minutes of consecutive zeros. For example, if spuriousDef = 20, this means that an observation point will be determined as a spurious observation if there are consequtive counts of at least 20 zeros before and after the single non-zero observation. Default is  spuriousDef = 20.}
   \item{nonwearDef}{Definition of non-wear time. Defined as minutes of consecutive zeros. For example, if nonwearDef=60, this means that a period will be defined as non-wear time if there are at least 60 consecutive zeros. Default is nonwearDef=60. To consider all observations as wear time specify nonwearDef=`inf'}
   \item{minWear}{Minimum wear time definition. Defined as minutes of wear time. or example, if minWear = 600, this means that a day will be considered valid only if the wear time is at least 600 minutes. Default is minWear = 600.}       
-  \item{patype}{Types of physical activity for summary. For example, to summarize sedentary and moderate-vigorous physical activities, user specifies patype=c(`Sedentary',`MVPA'). This labels the summary accordingly.}
-  \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary',`MVPA'), pacut can be specified as pacut=c(c(0,99),c(1952,Inf)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed interval). }
-  \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be specified for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use  boutsize=c(10,10)).}
-  \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity. If multiple patype is specified, tolerance should be for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use tolerance=c(`FALSE',`TRUE')).}
+  \item{patype}{Type of physical activity for summary. For example, to summarize sedentary activity, use option patype=c(`Sedentary'). TO summarize moderate-vigorous physical activities, user specifies patype=c(`MVPA'). This labels the summary accordingly.}
+  \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary'), pacut can be specified as pacut=c(c(0,99)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed inerval).}
+  \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be for each one (e.g., if patype=c(`Sedentary') then one can use  boutsize=c(10)).}
+  \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity (e.g., if patype=c(`Sedentary') then one can use tolerance=c(`FALSE')).}
+  \item{returnbout}{Whether to return data with bout indicators. If returnbout='FALSE' then only a summary of daily physical activity is returned. If returnbout='TRUE' }
 }
 
 \value{
-\item{summary}{
-Returns summary for each specified physical activity types (number of bouts and minutes of the activity), for valid dates.}
+If returnbout='FALSE', then a summary for each specified physical activity types (number of bouts and minutes of the activity), for valid dates. Defaults to 'TRUE'.
+
+If returnbout='TRUE', then a list of summary object is returned with:
+  \item{totalDates}{Number of unique days available in data.}
+  \item{validDates}{A summary for each specified physical activity types (number of bouts and minutes of the activity), for valid dates (as defined by minWear).}
+  \item{PA}{Data supplied by the user is returned with three additional columns [inPA, nonwear, inboutPA], indicating whether the observation was considered to be in the defined cutpoint of the physical activity (inPA), in the defined cutpoint of nonwear time (nonwear), or in bout (inboutPA), respectively.}
 }
 
 \author{
@@ -49,7 +54,7 @@ Copeland, J. L., and Esliger, D. W. (2009). Accelerometer assessment of physical
 
 \examples{
 ##
-## Example: Loading raw accelerometer data using readRaw function
+## Example: How to load the raw accelerometer data using readRaw function
 ##      
 \dontrun{
 library(acc)
@@ -58,7 +63,7 @@ counts <- readRaw(infile)
 }
 
 ##
-## Example: Summarizing accelerometer data for a sedentary individual
+## Example: Summarizing accelerometer data for a sedentary individual"  
 ##        
 
 # For this example, data is generated using a Hidden Markov model
@@ -67,7 +72,7 @@ randomTime <- seq(ISOdate(2015,4,1),ISOdate(2015,4,3),"min")
 # Load the mhsmm package to generate data using a Hidden Makov model
 library(mhsmm)
 # It is assumed that the counts are generated from a Hidden Markov model 
-# with three states being non-wear, sedentary, and moderate-vigorous activity
+# with three states, being non-wear, sedentary, and moderate-vigorous activity
 J <- 3; initial <- rep(1/J, J)
 # Set up a transition matrix for the Hidden Markov model.
 P <- matrix(c(0.95, 0.04, 0.01, 
@@ -85,12 +90,13 @@ counts <- data.frame(TimeStamp = randomTime[1:length(train$x)], counts = train$x
 library(acc)
 # summarize the data using the acc function.
 # Sedentary and moderate-vigorous activity is summarized, using Freedson's cut points by default.
-summary1 <- acc(data=counts, tri='FALSE', axis=NULL,
+# Option returnbout='TRUE' returns a more detailed information on how the summary was calculated.
+summary1 <- accsummary(data=counts, tri='FALSE', axis=NULL,
                      spuriousDef=20, nonwearDef=60, minWear=600, 
-                     patype=c('Sedentary','MVPA'),pacut=c(c(0,99),c(1952,Inf)), 
-                     boutsize=c(10,10), tolerance=c('FALSE','TRUE'))
-summary1  
-
+                     patype='MVPA',pacut=c(1952,Inf), 
+                     boutsize=10, tolerance='TRUE',returnbout='TRUE')
+summary1$validDates # This returns the same summary as when returnbout='FALSE'
+# summary1$PA # This returns the activity classification and bout information
 
 ##
 ## Example: Summarizing accelerometer data for an active individual.
@@ -108,10 +114,12 @@ train <- simulate(model, nsim = (60*24*2), seed = 1234, rand.emission = rnorm.hs
 
 counts <- data.frame(TimeStamp = randomTime[1:length(train$x)], counts = train$x)
 library(acc)
-summary2 <- acc(data=counts, tri='FALSE', axis=NULL,
+# Option returnbout='TRUE' returns a more detailed information on how the summary was calculated.
+summary2 <- accsummary(data=counts, tri='FALSE', axis=NULL,
                      spuriousDef=20, nonwearDef=60, minWear=600, 
-                     patype=c('Sedentary','MVPA'),pacut=c(c(0,99),c(1952,Inf)), 
-                     boutsize=c(10,10), tolerance=c('FALSE','TRUE'))
-summary2
+                     patype='MVPA',pacut=c(1952,Inf), 
+                     boutsize=10, tolerance='TRUE',returnbout='TRUE')
+summary2$validDates # This returns the same summary as when returnbout='FALSE'
+# summary2$PA # This returns the activity classification and bout information
 
 }
