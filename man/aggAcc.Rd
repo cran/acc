@@ -4,7 +4,7 @@
 Aggregates multiple accelerometer summary files
 }
 \description{
-Aggregates multiple accelerometer summary files by day. This function can be used in sequence with readRawBatch and accBatch.
+Aggregates multiple accelerometer summary files (e.g. summary files for multiple individuals) by day. This function can be used in sequence with readRawBatch and accBatch.
 }
 
 \usage{

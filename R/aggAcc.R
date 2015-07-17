@@ -1,3 +1,9 @@
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
 aggAcc <- function(path){
   
   myfilenames <- list.files(path = path)
@@ -20,6 +26,9 @@ aggAcc <- function(path){
   }
   
   aggregate <- do.call("rbind",mylist) #View(databind)
+  indicator <- c(3:ncol(aggregate))
+  aggregate <- data.frame(aggregate)
+  aggregate[,indicator] <- as.numeric(as.character(unlist(aggregate[,indicator])))
   file.out <- paste(newpath,"/","aggregate.Rdata",sep="")
-  save(noquote(aggregate), file = file.out) 
+  save(aggregate, file = file.out) 
 }

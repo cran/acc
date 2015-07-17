@@ -1,7 +1,7 @@
 \name{simAcc}
 \alias{simAcc}
 \title{
-Simulates accelerometer data
+Simulates accelerometer data based on a hidden Markov model
 }
 \description{
 Simulates accelerometer data. The simulation function is based on a hidden Markov model, as described in the example for function acc. This function is provided for convenience to generate data from a pre-specified transition probabilities to mimich activity levels of low, moderate and high. To generate data from a specific transition probabilities and distributions, please refer to the example for function acc.

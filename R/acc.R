@@ -1,3 +1,9 @@
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
 acc <- function(data, tri='FALSE', axis=NULL,
                 spuriousDef=20, nonwearDef=60, minWear=600, 
                 patype=c('Sedentary','MVPA'),pacut=c(c(0,99),c(1952,Inf)), 
@@ -7,7 +13,7 @@ acc <- function(data, tri='FALSE', axis=NULL,
   
   if(length(patype)!=0){
     for(i in 1:length(patype)){ 
-      summaryByPA[[patype[i]]] <- accsummary(data=data, tri=tri, axis=axis,
+      summaryByPA[[patype[i]]] <- accSummary(data=data, tri=tri, axis=axis,
                                              spuriousDef=spuriousDef, 
                                              nonwearDef=nonwearDef, minWear=minWear, 
                                              patype=patype[i],

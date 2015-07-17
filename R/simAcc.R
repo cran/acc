@@ -1,4 +1,9 @@
-
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
 simAcc <- function(minutes,mvpaLevel,seedset=1234){
   
   randomTime <- seq(ISOdate(2015,1,1),ISOdate(2020,1,1),"min")
@@ -25,7 +30,7 @@ simAcc <- function(minutes,mvpaLevel,seedset=1234){
   
   b <- list(mu = c(0, 30, 2500), sigma = c(0, 30, 1000))
   model <- hmmspec(init = initial, trans = P, parms.emission = b,dens.emission = dnorm.hsmm)
-  train <- simulate(model, nsim = (minutes), seed = seedset, rand.emission = rnorm.hsmm)
+  train <- simulate.hmmspec(model, nsim = (minutes), seed = seedset, rand.emission = rnorm.hsmm)
   counts <- data.frame(TimeStamp = randomTime[1:minutes], counts = round(train$x,0))
   counts
 }

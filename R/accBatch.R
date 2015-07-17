@@ -1,4 +1,9 @@
-
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
 accBatch <- function(path, tri='TRUE', axis='vm',
                      spuriousDef=20, nonwearDef=60, minWear=600, 
                      patype=c('Sedentary','MVPA'),pacut=c(c(0,99),c(1952,Inf)), 

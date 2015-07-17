@@ -8,11 +8,12 @@ Plots accelerometer data. This function receives summary object from function ac
 }
 
 \usage{
-plotAcc(object)
+plotAcc(object,markbouts)
 }
 
 \arguments{
   \item{object}{An object returned from either the function accsummary.}
+    \item{markbouts}{Whether to mark bouts. If markbout='TRUE' a bar along the time axis will indicate whether the epoch was counted as in bout or not. Default is false. }
 }
 \value{
 A plot is returned.
@@ -30,37 +31,42 @@ Jaejoon Song <jjsong2@mdanderson.org>
 ## Example: Simulate a dataset for two days, for an individual with low MVPA level.
 ##
 mvpaLowData <- simAcc(minutes=(60*24*2),mvpaLevel='low')
-summary <- accsummary(data=mvpaLowData)
+summary <- accSummary(data=mvpaLowData)
 summary$validDates
-plotAcc(summary)
+plotAcc(summary,markbouts='FALSE')
 
 ##
 ## Example: Simulate a dataset for two days, for an individual with moderate MVPA level.
 ##
 mvpaModData <- simAcc(minutes=(60*24*2),mvpaLevel='moderate')
-summary <- accsummary(data=mvpaModData, tri='FALSE', axis=NULL,
+summary <- accSummary(data=mvpaModData, tri='FALSE', axis=NULL,
              spuriousDef=20, nonwearDef=60, minWear=600, 
              patype='MVPA',pacut=c(1952,Inf), boutsize=10, 
              tolerance='TRUE', returnbout='TRUE')
 summary$validDates
-plotAcc(summary)
+\dontrun{
+plotAcc(summary,markbouts='FALSE')
+}
 
 ##
 ## Example: Simulate a dataset for two days, for an individual with high MVPA level.
 ##
+\dontrun{
 mvpaHighData <- simAcc(minutes=(60*24*2),mvpaLevel='high')
-summary <- accsummary(data=mvpaHighData, tri='FALSE', axis=NULL,
+summary <- accSummary(data=mvpaHighData, tri='FALSE', axis=NULL,
              spuriousDef=20, nonwearDef=60, minWear=600, 
              patype='MVPA',pacut=c(1952,Inf), boutsize=10, 
              tolerance='TRUE', returnbout='TRUE')
 summary$validDates
-plotAcc(summary)
+
+plotAcc(summary,markbouts='FALSE')
+}
 
 
 ##
 ## Example: Simulate a tri-axial dataset for five days.
 ##
-
+\dontrun{
   library(acc)
   library(mhsmm)
   seedset=1234
@@ -75,29 +81,31 @@ plotAcc(summary)
 
   b <- list(mu = c(0, 30, 2500), sigma = c(0, 30, 1000))
   model1 <- hmmspec(init = initial, trans = P1, parms.emis = b,dens.emis = dnorm.hsmm)
-  x <- simulate(model1, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
+  x <- simulate.hmmspec(model1, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
 
   seedset=12345
   P2 <- matrix(c(0.95, 0.04, 0.01, 
                   0.09, 0.8, 0.11, 
                   0.1, 0.1, 0.8), byrow='TRUE',nrow = J)
   model2 <- hmmspec(init = initial, trans = P2, parms.emis = b,dens.emis = dnorm.hsmm)
-  y <- simulate(model2, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
+  y <- simulate.hmmspec(model2, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
 
   seedset=123456
   P3 <- matrix(c(0.95, 0.04, 0.01, 
                   0.09, 0.8, 0.11, 
                   0.1, 0.1, 0.8), byrow='TRUE',nrow = J)
   model3 <- hmmspec(init = initial, trans = P3, parms.emis = b,dens.emis = dnorm.hsmm)
-  z <- simulate(model3, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
+  z <- simulate.hmmspec(model3, nsim = (minutes), seed = seedset, rand.emis = rnorm.hsmm)
 
   counts <- data.frame(TimeStamp = randomTime[1:minutes], x=x$x, y=y$x, z=z$x)
-  summary <- accsummary(data=counts, tri='TRUE', axis='vm',
+  summary <- accSummary(data=counts, tri='TRUE', axis='vm',
                         spuriousDef=20, nonwearDef=60, minWear=600, 
                         patype='MVPA',pacut=c(1952,Inf), boutsize=10, tolerance='TRUE',
                         returnbout='TRUE')
 summary$validDates
-plotAcc(summary)
+
+plotAcc(summary,markbouts='FALSE')
+}
 
 
 }

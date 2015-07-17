@@ -1,10 +1,10 @@
 \name{readRaw}
 \alias{readRaw}
 \title{
-Reads raw files
+Reads raw files in .dat or .csv format for Actigraph GT1M and GT3X devices
 }
 \description{
-Reads raw files in .dat format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
+Reads raw files in .dat or .csv format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
 }
 
 \usage{
@@ -12,7 +12,7 @@ readRaw(filename)
 }
 
 \arguments{
-  \item{filename}{Speficy full file path and file name. e.g. C:/mydata.dat}
+  \item{filename}{Speficy full file path and file name. e.g. C:/mydata.dat or C:/mydata.csv}
 }
 
 
@@ -34,7 +34,10 @@ Jaejoon Song <jjsong2@mdanderson.org>
 ##
 ## A example to read raw data
 ##
-# readRaw("C:/mydata.dat")
+\dontrun{
+accData1 <- readRaw("C:/mydata.dat")
+accData2 <- readRaw("C:/mydata.csv")
+}
 
 
 }

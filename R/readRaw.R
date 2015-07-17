@@ -1,5 +1,9 @@
-
-
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
 readRaw <- function(filename){
   
   Tfile <- file(filename, "r")
@@ -58,14 +62,14 @@ readRaw <- function(filename){
   endline = length(lines)
   
   col0 = gsub("[[:blank:]]+", " ",lines[startline])
-  col = strsplit(col0, " ")[[1]]
+  col = strsplit(col0, c("\\, |\\,| "))[[1]]
   col = length(col[col != ""])
   
   timeline = c()
   mymatrix <- matrix(NA,(endline-startline+1),col) 
   for(i in startline:endline){
     temp0 = gsub("[[:blank:]]+", " ",lines[i])
-    temp = strsplit(temp0, " ")[[1]]
+    temp = strsplit(temp0, c("\\, |\\,| "))[[1]]
     temp = temp[temp != ""] 
     if(length(temp)>0){mymatrix[(i-startline+1),1:length(temp)] <- temp}
   }
@@ -74,8 +78,8 @@ readRaw <- function(filename){
   counts <- counts[!is.na(counts)]
   
   if(type=="uni-axial"){
-    timeline = (0:as.integer((length(counts))/3-1)*ep)
-    rawTimeStamp = rep(rawTimeStamp1, (length(counts))/3)
+    timeline = (0:as.integer((length(counts))-1)*ep)
+    rawTimeStamp = rep(rawTimeStamp1, (length(counts)))
     rst = gsub(" GMT", "", as.POSIXlt(rawTimeStamp, tz = "GMT")+ timeline)
     data = data.frame(TimeStamp = as.vector(rst), counts = counts)
   }

@@ -1,4 +1,10 @@
-accsummary <- function(data, tri='FALSE', axis='NULL',
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
+accSummary <- function(data, tri='FALSE', axis='NULL',
                        spuriousDef=20, nonwearDef=60, minWear=600, 
                        patype=c('MVPA'),pacut=c(1952), 
                        boutsize=10, tolerance='TRUE', returnbout='TRUE'){
@@ -13,7 +19,7 @@ accsummary <- function(data, tri='FALSE', axis='NULL',
   }
   
   if(length(patype)>1){
-  stop("Please specify one patype. Please use function acc to obtain summary for multiple physical activities")}
+    stop("Please specify one patype. Please use function acc to obtain summary for multiple physical activities")}
   
   epoch <- as.numeric(difftime(strptime(data$TimeStamp[2],format='%Y-%m-%d %H:%M:%S'),
                                strptime(data$TimeStamp[1],format='%Y-%m-%d %H:%M:%S'),
@@ -182,7 +188,6 @@ accsummary <- function(data, tri='FALSE', axis='NULL',
   colnames(pasummary) <- c('Date',mycolname1,mycolname2)
   
   summarized <- list()
-  #summarized$totalDates <- uniqueDates
   summarized$validDates <- pasummary
   summarized$wearTime <- wearTime
   

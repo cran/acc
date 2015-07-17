@@ -1,4 +1,10 @@
-plotAcc <- function(object){
+#' @export
+#' @importFrom utils head tail 
+#' @importFrom graphics par axis title plot rect legend lines
+#' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
+#' @importFrom zoo rollmean rollsum rollmedian
+#' @importFrom PhysicalActivity dataCollapser
+plotAcc <- function(object,markbouts='FALSE'){
   
   if(names(object[1])=="totalDates"){
     counts <- object[[3]]$counts  # View(counts)
@@ -95,7 +101,7 @@ plotAcc <- function(object){
     title(ylab="Acceleration counts")
     title(xlab="Time",line=5)
     
-    
+    if(markbouts=='TRUE'){
     cols <- c("#66C2A5", "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#FFD92F", "#E5C494", "#B3B3B3")
     t <- rep(1:length(counts))
     
@@ -125,7 +131,7 @@ plotAcc <- function(object){
              bty = "n", fill=c("sienna1"), xjust = 0.01)
       
     }              
-    
+    }
     
     
   }
