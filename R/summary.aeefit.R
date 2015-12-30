@@ -1,5 +1,5 @@
 #' @export
-#' @importFrom stats printCoefmat
+#' @importFrom stats printCoefmat pnorm
 #' @importFrom methods setClass setMethod
 
 summary.aeefit <- function(object, digits = 2, dig.tst = 4, ...) {

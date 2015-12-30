@@ -2,6 +2,8 @@
 #' @importFrom utils head tail 
 #' @importFrom plyr ddply
 #' @importFrom nleqslv nleqslv
+#' @importFrom stats model.matrix
+#' @importFrom methods getClass
 
 
 

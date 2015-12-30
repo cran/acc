@@ -2,6 +2,7 @@
 #' @importFrom plyr ddply
 #' @importFrom nleqslv nleqslv
 #' @importFrom methods setClass setMethod
+#' @importFrom stats uniroot stepfun
 
 ##############################################################################
 # Augmented Estimating Equations (AEE)

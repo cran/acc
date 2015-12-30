@@ -1,4 +1,6 @@
 #' @export
+#' @importFrom stats model.matrix
+#' @importFrom methods getClass
 
 aee <- function(ID, time, minutes) {
   if (sum(time <= 0) > 0)
