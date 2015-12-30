@@ -1,14 +1,14 @@
-\name{readRaw}
-\alias{readRaw}
+\name{readCounts}
+\alias{readCounts}
 \title{
-Reads raw files in .dat or .csv format for Actigraph GT1M and GT3X devices
+Reads counts data in .dat or .csv format for Actigraph GT1M and GT3X devices
 }
 \description{
-Reads raw files in .dat or .csv format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
+Reads counts data in .dat or .csv format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
 }
 
 \usage{
-readRaw(filename)
+readCounts(filename)
 }
 
 \arguments{
@@ -32,11 +32,11 @@ Jaejoon Song <jjsong2@mdanderson.org>
 \examples{
 
 ##
-## A example to read raw data
+## A example to read counts data
 ##
 \dontrun{
-accData1 <- readRaw("C:/mydata.dat")
-accData2 <- readRaw("C:/mydata.csv")
+accData1 <- readCounts("C:/mydata.dat")
+accData2 <- readCounts("C:/mydata.csv")
 }
 
 

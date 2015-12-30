@@ -4,7 +4,7 @@
 Summarizes accelerometer data for a single type of physical activity
 }
 \description{
-Summarizes accelerometer data for a single type of physical activity. Functionality is same as function acc, except that this function provides a summary for a singly type of physical activity, with more detailed information.
+Summarizes accelerometer data for a single type of physical activity. Functionality is same as function acc, except that this function provides a summary for a single type of physical activity, with more detailed information.
 }
 
 \usage{
@@ -17,15 +17,15 @@ accSummary(data, tri, axis, spuriousDef, nonwearDef, minWear,
 \arguments{
   \item{data}{Data which consists of two columns [TimeStamp,counts] (i.e. raw accelerometer file read in by function readRaw)}
   \item{tri}{Whether the data is from a tri-axial accelerometer. Default is tri=`FALSE'. If tri=`TRUE' then option `axis' should be specified.}
-  \item{axis}{This option is only used for the tri-axial accelerometer. Options are `x',`y',`z',`sum', or `vm'. Options `x', `y', or `z' can be spefied to summarize data using only data from a single axis. If the option 'vm' is used, the square root of the squared sum of counts from three axes (i.e. sqrt(x^2+y^2+z^2)) are used for the summary. If the option 'sum' is used, sum of the counts from three axes are used.}
+  \item{axis}{This option is only used for the tri-axial accelerometer. Options are `x',`y',`z',`sum', or `vm'. Options `x', `y', or `z' can be spefied to summarize data using only data from a single axis. If the option 'vm' is used, the square root of the squared sum of counts from three axes (i.e. \eqn{\sqrt{{x}^{2}+{y}^{2}+{z}^{2}}} are used for the summary. If the option 'sum' is used, sum of the counts from three axes are used.}
   \item{spuriousDef}{Definition of spurious observation. Defined as minutes of consecutive zeros. For example, if spuriousDef = 20, this means that an observation point will be determined as a spurious observation if there are consequtive counts of at least 20 zeros before and after the single non-zero observation. Default is  spuriousDef = 20.}
-  \item{nonwearDef}{Definition of non-wear time. Defined as minutes of consecutive zeros. For example, if nonwearDef=60, this means that a period will be defined as non-wear time if there are at least 60 consecutive zeros. Default is nonwearDef=60. To consider all observations as wear time specify nonwearDef=`inf'}
+  \item{nonwearDef}{Definition of non-wear time. Defined as minutes of consecutive zeros. For example, if nonwearDef=60, this means that a period will be defined as non-wear time if there are at least 60 consecutive zeros. Default is nonwearDef=60. To consider all observations as wear time specify nonwearDef=`Inf'}
   \item{minWear}{Minimum wear time definition. Defined as minutes of wear time. or example, if minWear = 600, this means that a day will be considered valid only if the wear time is at least 600 minutes. Default is minWear = 600. To return summary for all dates in the data, set minWear = 0.}       
-  \item{patype}{Type of physical activity for summary. For example, to summarize sedentary activity, use option patype=c(`Sedentary'). TO summarize moderate-vigorous physical activities, user specifies patype=c(`MVPA'). This labels the summary accordingly.}
+  \item{patype}{Type of physical activity for summary. For example, to summarize sedentary activity, use option patype=c(`Sedentary'). To summarize moderate-vigorous physical activities, user specifies patype=c(`MVPA'). This labels the summary accordingly.}
   \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary'), pacut can be specified as pacut=c(c(0,99)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed inerval).}
   \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be for each one (e.g., if patype=c(`Sedentary') then one can use  boutsize=c(10)).}
-  \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity (e.g., if patype=c(`Sedentary') then one can use tolerance=c(`FALSE')).}
-  \item{returnbout}{Whether to return data with bout indicators. If returnbout='FALSE' then only a summary of daily physical activity is returned. If returnbout='TRUE' }
+  \item{tolerance}{Whether two observations outside the physical activity cut point should be permitted in summarizing a physical activity (e.g. if patype=c(`Sedentary') then one can use tolerance=c(`FALSE')).}
+  \item{returnbout}{Whether to return data with bout indicators. If returnbout='FALSE' then only a summary of daily physical activity is returned.}
 }
 
 \value{
@@ -54,16 +54,16 @@ Copeland, J. L., and Esliger, D. W. (2009). Accelerometer assessment of physical
 
 \examples{
 ##
-## Example: How to load the raw accelerometer data using readRaw function
+## Example 1: How to load the raw accelerometer data using readRaw function
 ##      
 \dontrun{
 library(acc)
 infile <- "RawDataName.dat"
-counts <- readRaw(infile)
+counts <- readCounts(infile)
 }
 
 ##
-## Example: Summarizing accelerometer data for a sedentary individual"  
+## Example 2: Summarizing accelerometer data for a sedentary individual"  
 ##        
 
 # For this example, data is generated using a Hidden Markov model
@@ -99,7 +99,7 @@ summary1$validDates # This returns the same summary as when returnbout='FALSE'
 # summary1$PA # This returns the activity classification and bout information
 
 ##
-## Example: Summarizing accelerometer data for an active individual.
+## Example 3: Summarizing accelerometer data for an active individual.
 ##
 
 randomTime <- seq(ISOdate(2015,4,1),ISOdate(2015,4,3),"min")

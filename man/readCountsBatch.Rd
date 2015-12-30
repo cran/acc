@@ -1,18 +1,18 @@
-\name{readRawBatch}
-\alias{readRawBatch}
+\name{readCountsBatch}
+\alias{readCountsBatch}
 \title{
-Reads multiple raw accelerometer data in a folder
+Reads multiple accelerometer counts data in a folder
 }
 \description{
-Reads multiple raw accelerometer data in a folder. This is a batch mode of the readRaw function.
+Reads multiple accelerometer counts data in a folder. This is a batch mode of the readCounts function.
 }
 
 \usage{
-readRawBatch(path,filetype)
+readCountsBatch(path,filetype)
 }
 
 \arguments{
-  \item{path}{Path to a folder which contains accelerometer data in .dat or .csv format.}
+  \item{path}{Path to a folder which contains accelerometer counts data in .dat or .csv format.}
   \item{filetype}{Specify whether the data to read is in dat or csv format. Options are either 'dat' or 'csv'. For example if filetype = 'csv' is specified, all csv data will be read and all other types in the same folder will be ignored. By defalt, it is assumed that all files in the specified path are either csv or dat files and are intended to be read.}
 }
 
@@ -38,6 +38,6 @@ Jaejoon Song <jjsong2@mdanderson.org>
 # filepath to locate the raw accelerometer files
 \dontrun{
 mypath <- "C:/Accelerometry files"
-readRawBatch(mypath,filetype='csv')
+readCountsBatch(mypath,filetype='csv')
 }
 }

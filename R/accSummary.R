@@ -21,9 +21,15 @@ accSummary <- function(data, tri='FALSE', axis='NULL',
   if(length(patype)>1){
     stop("Please specify one patype. Please use function acc to obtain summary for multiple physical activities")}
   
-  epoch <- as.numeric(difftime(strptime(data$TimeStamp[2],format='%Y-%m-%d %H:%M:%S'),
+  epoch <- mean(c(as.numeric(difftime(strptime(data$TimeStamp[2],format='%Y-%m-%d %H:%M:%S'),
                                strptime(data$TimeStamp[1],format='%Y-%m-%d %H:%M:%S'),
-                               units = c("secs")))
+                               units = c("secs"))),
+           as.numeric(difftime(strptime(data$TimeStamp[3],format='%Y-%m-%d %H:%M:%S'),
+                               strptime(data$TimeStamp[2],format='%Y-%m-%d %H:%M:%S'),
+                               units = c("secs"))),
+           as.numeric(difftime(strptime(data$TimeStamp[4],format='%Y-%m-%d %H:%M:%S'),
+                               strptime(data$TimeStamp[3],format='%Y-%m-%d %H:%M:%S'),
+                               units = c("secs")))),na.rm=TRUE)
   
   if(epoch<60){data <- dataCollapser(data, TS = "TimeStamp", col = "counts", by = 60)}
   if(epoch>60){stop("Epoch is larger than 60 seconds. Please provide a dataset with epoch of 1 minutes or less")}

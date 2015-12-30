@@ -4,7 +4,7 @@
 #' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
 #' @importFrom zoo rollmean rollsum rollmedian
 #' @importFrom PhysicalActivity dataCollapser
-readRaw <- function(filename){
+readCounts <- function(filename){
   
   Tfile <- file(filename, "r")
   if(isOpen(Tfile, "r")) #  TRUE

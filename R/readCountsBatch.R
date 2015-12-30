@@ -4,7 +4,7 @@
 #' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
 #' @importFrom zoo rollmean rollsum rollmedian
 #' @importFrom PhysicalActivity dataCollapser
-readRawBatch <- function(path,filetype=NULL){
+readCountsBatch <- function(path,filetype=NULL){
   
   if(is.null(filetype)=='TRUE'){
     myfilenames <- list.files(path = path)
@@ -23,7 +23,7 @@ readRawBatch <- function(path,filetype=NULL){
     if(mystr == "dat" | mystr == "csv"){
       infilename <- paste(path,"/",myfilenames[i],sep="")
       myID <- substr(myfilenames[i], 1, mynchar-4)
-      counts <- readRaw(infilename)
+      counts <- readCounts(infilename)
       file.out <- paste(newpath,"/",myID,".Rdata",sep="")
       save(counts, file = file.out) 
     }

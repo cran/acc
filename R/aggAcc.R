@@ -19,8 +19,9 @@ aggAcc <- function(path){
     if(mystr == ".Rdata"){
       file.out <- paste(path,"/",myfilenames[i],sep="")
       load(file.out)
-      if(nrow(summary)>1){
-        mylist[[i]] <- as.matrix(summary)}
+      if(nrow(summary)>=1){
+        mylist[[i]] <- as.matrix(summary)
+      }
       rm(summary)
     }
   }

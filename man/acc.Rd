@@ -15,16 +15,16 @@ acc(data, tri, axis, spuriousDef, nonwearDef, minWear,
 
 
 \arguments{
-  \item{data}{Data which consists of two columns [TimeStamp,counts] (i.e. raw accelerometer file read in by function readRaw)}
+  \item{data}{Data which consists of two columns [TimeStamp,counts] (i.e. accelerometer counts file read in by function readCounts)}
   \item{tri}{Whether the data is from a tri-axial accelerometer. Default is tri=`FALSE'. If tri=`TRUE' then option `axis' should be specified.}
-  \item{axis}{This option is only used for the tri-axial accelerometer. Options are `x',`y',`z',`sum', or `vm'. Options `x', `y', or `z' can be spefied to summarize data using only data from a single axis. If the option 'vm' is used, the square root of the squared sum of counts from three axes (i.e. sqrt(x^2+y^2+z^2)) are used for the summary. If the option 'sum' is used, sum of the counts from three axes are used.}
+  \item{axis}{This option is only used for the tri-axial accelerometer. Options are `x',`y',`z',`sum', or `vm'. Options `x', `y', or `z' can be specified to summarize data using only data from a single axis. If the option 'vm' is used, the square root of the squared sum of counts from three axes (i.e. \eqn{\sqrt{{x}^{2}+{y}^{2}+{z}^{2}}}) are used for the summary. If the option 'sum' is used, sum of the counts from three axes are used.}
   \item{spuriousDef}{Definition of spurious observation. Defined as minutes of consecutive zeros. For example, if spuriousDef = 20, this means that an observation point will be determined as a spurious observation if there are consequtive counts of at least 20 zeros before and after the single non-zero observation. Default is  spuriousDef = 20.}
-  \item{nonwearDef}{Definition of non-wear time. Defined as minutes of consecutive zeros. For example, if nonwearDef=60, this means that a period will be defined as non-wear time if there are at least 60 consecutive zeros. Default is nonwearDef=60. To consider all observations as wear time specify nonwearDef=`inf'}
+  \item{nonwearDef}{Definition of non-wear time. Defined as minutes of consecutive zeros. For example, if nonwearDef=60, this means that a period will be defined as non-wear time if there are at least 60 consecutive zeros. Default is nonwearDef=60. To consider all observations as wear time specify nonwearDef=`Inf'.}
   \item{minWear}{Minimum wear time definition. Defined as minutes of wear time. or example, if minWear = 600, this means that a day will be considered valid only if the wear time is at least 600 minutes. Default is minWear = 600. To return summary for all dates in the data, set minWear = 0.}       
   \item{patype}{Types of physical activity for summary. For example, to summarize sedentary and moderate-vigorous physical activities, user specifies patype=c(`Sedentary',`MVPA'). This labels the summary accordingly.}
   \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary',`MVPA'), pacut can be specified as pacut=c(c(0,99),c(1952,Inf)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed interval). }
   \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be specified for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use  boutsize=c(10,10)).}
-  \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity. If multiple patype is specified, tolerance should be for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use tolerance=c(`FALSE',`TRUE')).}
+  \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity. If multiple patype is specified, tolerance should be for each one (e.g. if patype=c(`Sedentary',`MVPA') then one can use tolerance=c(`FALSE',`TRUE')).}
 }
 
 \value{
@@ -49,12 +49,12 @@ Copeland, J. L., and Esliger, D. W. (2009). Accelerometer assessment of physical
 
 \examples{
 ##
-## Example: Loading raw accelerometer data using readRaw function
+## Example: Loading accelerometer counts data using readCounts function
 ##      
 \dontrun{
 library(acc)
-infile <- "RawDataName.dat"
-counts <- readRaw(infile)
+infile <- "CountsDataName.dat"
+counts <- readCounts(infile)
 }
 
 ##
