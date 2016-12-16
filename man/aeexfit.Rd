@@ -1,17 +1,17 @@
-\name{aeefit}
-\alias{aeefit}
+\name{aeexfit}
+\alias{aeexfit}
 
 \title{
-Fits semiparametric regression models for irregularly observed physical activity data
+Fits semiparametric regression models robust to informative observation times and censoring
 }
 \description{
-Fits semiparametric regression models for irregularly observed physical activity data under conditional independent censoring
+Fits semiparametric regression models robust to informative observation times and censoring
 }
 \usage{
-aeefit(formula, data, weight, se, control=list(), boot)
+aeexfit(formula, data, weight, se, control=list(), boot)
 }
 
- 
+
 
 \arguments{
   \item{formula}{A formula object as returned by aee.}
@@ -21,13 +21,6 @@ aeefit(formula, data, weight, se, control=list(), boot)
   \item{control}{A list of control parameters. See 'Details'.}
   \item{boot}{The number of resamples generated for the bootstrap procedure.}
 }
-
-
-
-
-
-
-
 
 \details{
 The control argument is a list athat can supply any of the following components:
@@ -59,13 +52,12 @@ Jaejoon Song <jjsong2@mdanderson.org>
 
 \examples{
 \dontrun{
+
 data(NHANES)
-# Example of analyzing NHANES data 
-# Example 1: Not adjusted for sampling weights
-nhanesToFit <- NHANES[ which(NHANES$mvpaMinutes!=0), ]
-formula <- aee(ID, Day, mvpaMinutes) ~ Age+raceBi+VO2max+Gender
-fitted1 <- aeefit(formula=formula, data=nhanesToFit) 
-summary(fitted1)
+formula <- aee(ID, Day, mvpaMinutes) ~ VO2max
+# Standard errors are obtained using sandwich estimation
+fitted <- aeexfit(formula = formula, data = NHANES, se = "Sandwich")
+summary(fitted)
 }
 }
 \keyword{ aeefit }

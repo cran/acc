@@ -1,10 +1,10 @@
 \name{readCounts}
 \alias{readCounts}
 \title{
-Reads counts data in .dat or .csv format for Actigraph GT1M and GT3X devices
+Reads counts data in .dat, .agd, or .csv format for Actigraph GT1M and GT3X devices
 }
 \description{
-Reads counts data in .dat or .csv format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
+Reads counts data in .dat, .agd, or .csv format for Actigraph GT1M and GT3X devices. Device type and epoch is automatically detected and reported in the console.
 }
 
 \usage{
@@ -35,6 +35,7 @@ Jaejoon Song <jjsong2@mdanderson.org>
 ## A example to read counts data
 ##
 \dontrun{
+accData1 <- readCounts("C:/mydata.agd")
 accData1 <- readCounts("C:/mydata.dat")
 accData2 <- readCounts("C:/mydata.csv")
 }

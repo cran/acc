@@ -9,7 +9,7 @@ Summarizes accelerometer data for a single type of physical activity. Functional
 
 \usage{
 accSummary(data, tri, axis, spuriousDef, nonwearDef, minWear,
-    patype, pacut, boutsize, tolerance, returnbout)
+    patype, pacut, epoch, boutsize, tolerance, returnbout)
 }
 
 
@@ -24,6 +24,7 @@ accSummary(data, tri, axis, spuriousDef, nonwearDef, minWear,
   \item{patype}{Type of physical activity for summary. For example, to summarize sedentary activity, use option patype=c(`Sedentary'). To summarize moderate-vigorous physical activities, user specifies patype=c(`MVPA'). This labels the summary accordingly.}
   \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary'), pacut can be specified as pacut=c(c(0,99)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed inerval).}
   \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be for each one (e.g., if patype=c(`Sedentary') then one can use  boutsize=c(10)).}
+  \item{epoch}{Epoch size. Default is '1 min'. Other epoch size can be specified using this option (e.g., '1 sec')}
   \item{tolerance}{Whether two observations outside the physical activity cut point should be permitted in summarizing a physical activity (e.g. if patype=c(`Sedentary') then one can use tolerance=c(`FALSE')).}
   \item{returnbout}{Whether to return data with bout indicators. If returnbout='FALSE' then only a summary of daily physical activity is returned.}
 }
@@ -54,13 +55,13 @@ Copeland, J. L., and Esliger, D. W. (2009). Accelerometer assessment of physical
 
 \examples{
 ##
-## Example 1: How to load the raw accelerometer data using readRaw function
+## Example 1: Loading the activity counts data using readCounts function
 ##      
 \dontrun{
 library(acc)
-infile <- "RawDataName.dat"
+infile <- "DataName.dat"
 counts <- readCounts(infile)
-}
+
 
 ##
 ## Example 2: Summarizing accelerometer data for a sedentary individual"  
@@ -122,4 +123,5 @@ summary2 <- accSummary(data=counts, tri='FALSE', axis=NULL,
 summary2$validDates # This returns the same summary as when returnbout='FALSE'
 # summary2$PA # This returns the activity classification and bout information
 
+}
 }

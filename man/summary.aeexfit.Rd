@@ -1,18 +1,18 @@
-\name{summary.aeefit}
-\alias{summary.aeefit}
+\name{summary.aeexfit}
+\alias{summary.aeexfit}
 
 \title{
-Summary method for aeefit objects
+Summary method for aeexfit objects
 }
 \description{
-Prints estimated parameters for \code{aeefit} object
+Prints estimated parameters for \code{aeexfit} object
 }
 \usage{
-\method{summary}{aeefit}(object, digits = 3, dig.tst = 2, ...)
+\method{summary}{aeexfit}(object, digits = 3, dig.tst = 2, ...)
 }
 
 \arguments{
-  \item{object}{ A \code{aeefit} object }
+  \item{object}{ A \code{aeexfit} object }
   \item{digits}{Minimum number of significant digits to be used for most numbers.}
   \item{dig.tst}{Minimum number of significant digits for the test statistics}
   \item{...}{...}
@@ -30,4 +30,4 @@ Jaejoon Song <jjsong2@mdanderson.org>
 \examples{
 ##Will put an example here
 }
-\keyword{ summary.aeefit }
+\keyword{ summary.aeexfit }

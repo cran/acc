@@ -34,23 +34,16 @@ Jaejoon Song <jjsong2@mdanderson.org>
 
 \examples{
 \dontrun{
-data(NHANES)
-# Example of analyzing NHANES data 
-# Example 1: Not adjusted for sampling weights
-nhanesToFit <- NHANES[ which(NHANES$mvpaMinutes!=0), ]
-formula <- aee(ID, Day, mvpaMinutes) ~ Age+raceBi+VO2max+Gender
-fitted1 <- aeefit(formula=formula, data=nhanesToFit) 
-summary(fitted1)
+# We illustrate the use of function aeexfit
+# with the sample data from the National Health and Nutrition Examination Survey (NHANES) 
+# to examine the association between the cardiorespiratory function (i.e., VO2max) 
+# and daily minutes of moderate to vigorous physical activity (MVPA).
 
-# Example 2: Adjusted for sampling weights
-data(weight)
-nhanesToFit <- NHANES[ which(NHANES$mvpaMinutes!=0), ]
-nhanesUnique <- nhanesToFit[!duplicated(nhanesToFit$ID),]
-weightUnique <- merge(nhanesUnique, weight, by="ID")
-selProb=(1/weightUnique$weight)
-formula <- aee(ID, Day, mvpaMinutes) ~ Age+raceBi+VO2max+Gender
-fitted2 <- aeefit(formula=formula, data=nhanesToFit, weight = selProb) 
-summary(fitted2)
+data(NHANES)
+formula <- aee(ID, Day, mvpaMinutes) ~ VO2max
+# Standard errors are obtained using sandwich estimation
+fitted <- aeexfit(formula = formula, data = NHANES, se = "Sandwich")
+summary(fitted)
 }
 }
 \keyword{ aee }

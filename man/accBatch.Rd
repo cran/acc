@@ -9,7 +9,7 @@ Summarizes multiple accelerometer datafiles in a batch mode. Summary can be prov
 
 \usage{
 accBatch(path, tri, axis, spuriousDef, nonwearDef, minWear,
-    patype, pacut, boutsize, tolerance)
+    patype, pacut, epoch, boutsize, tolerance)
 }
 
 \arguments{
@@ -22,6 +22,7 @@ accBatch(path, tri, axis, spuriousDef, nonwearDef, minWear,
   \item{patype}{Types of physical activity for summary. For example, to summarize sedentary and moderate-vigorous physical activities, user specifies patype=c(`Sedentary',`MVPA'). This labels the summary accordingly.}
   \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary',`MVPA'), pacut can be specified as pacut=c(c(0,99),c(1952,Inf)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed inerval). }
   \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use  boutsize=c(10,10)).}
+  \item{epoch}{Epoch size. Default is '1 min'. Other epoch size can be specified using this option (e.g., '1 sec')}
   \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity. If multiple patype is specified, tolerance should be for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use tolerance=c(`FALSE',`TRUE')).}
 }
 

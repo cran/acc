@@ -8,12 +8,13 @@
 #' @useDynLib acc
 
 
+
 ##############################################################################
-# User's Main Function
+# User's Main Function for AEEX
 ##############################################################################
-aeefit <- function(formula, data, weight=NULL, se="Sandwich", control=list(), boot=NULL) {
+aeexfit <- function(formula, data, weight=NULL, se="Sandwich", control=list(), boot=NULL) {
   
-  method <- "AEE"
+  method <- "AEEX"
   Call <- match.call()
   fm <- formula
   
@@ -52,29 +53,31 @@ aeefit <- function(formula, data, weight=NULL, se="Sandwich", control=list(), bo
   #if(se == "NULL"){
   #  stdErr <- NULL}
   #if(se != "NULL"){
-    stdErr.control <- control[names(control) %in% names(attr(getClass(se), "slots"))]
-    stdErr <- do.call("new", c(list(Class=se), stdErr.control))
+  stdErr.control <- control[names(control) %in% names(attr(getClass(se), "slots"))]
+  stdErr <- do.call("new", c(list(Class=se), stdErr.control))
   #}
   
   if(se=="Sandwich"){
-  fit <- doPanelFit.AEE.Sandwich(DF=DF, panelMatrix=obj$panelMatrix, timeGrid=obj$timeGrid,
-                                 X=X, engine=engine,weight=weight)
+    fit <- doPanelFit.AEEX.Sandwich(DF=DF, panelMatrix=obj$panelMatrix, timeGrid=obj$timeGrid,
+                                    X=X, engine=engine,weight=weight)
   }
-    
+  
   if(se=="Bootstrap"){
-      fit <- doPanelFit.AEE.Bootstrap(DF=DF, panelMatrix=obj$panelMatrix, timeGrid=obj$timeGrid,
+    fit <- doPanelFit.AEEX.Bootstrap(DF=DF, panelMatrix=obj$panelMatrix, timeGrid=obj$timeGrid,
                                      X=X, engine=engine,weight=weight, boot)
   }  
-    
+  
   ret = list(formula=fm, beta=fit$beta, 
-        baseline=fit$baseline,
-        timeGrid=fit$timeGrid,
-        lambda=fit$lambda,
-        convergence=fit$convergence,
-        iter=fit$iter,
-        betaSE=fit$betaSE,
-        betaVar=fit$betaVar,
-        baselineSE=fit$baselineSE)
+             baseline=fit$baseline,
+             timeGrid=fit$timeGrid,
+             lambda=fit$lambda,
+             convergence=fit$convergence,
+             iter=fit$iter,
+             betaSE=fit$betaSE,
+             betaVar=fit$betaVar,
+             baselineSE=fit$baselineSE)
+             #U1=fit$U1,U2=fit$U2,U=fit$U,V=fit$V,A=fit$A,B=fit$B,V=fit$V,X=fit$X,
+             #panelMatrix=fit$panelMatrix,lambda=fit$lambda)
   
   class(ret) <- "aeefit"
   ret

@@ -2,8 +2,14 @@
 #' @importFrom utils head tail 
 #' @importFrom graphics par axis title plot rect legend
 #' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
-#' @importFrom zoo rollmean rollsum rollmedian
 #' @importFrom PhysicalActivity dataCollapser
+#' @importFrom DBI dbConnect
+#' @importFrom RSQLite SQLite
+#' @importFrom Rcpp evalCpp
+#' @useDynLib acc
+
+
+
 readCountsBatch <- function(path,filetype=NULL){
   
   if(is.null(filetype)=='TRUE'){
@@ -20,7 +26,7 @@ readCountsBatch <- function(path,filetype=NULL){
     mynchar <- nchar(myfilenames[i])
     mystr <- substr(myfilenames[i],mynchar-2,mynchar)
     
-    if(mystr == "dat" | mystr == "csv"){
+    if(mystr == "dat" | mystr == "csv" | mystr == "agd"){
       infilename <- paste(path,"/",myfilenames[i],sep="")
       myID <- substr(myfilenames[i], 1, mynchar-4)
       counts <- readCounts(infilename)

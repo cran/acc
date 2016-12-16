@@ -9,9 +9,8 @@ Summarizes accelerometer for multiple types of physical activities
 
 \usage{
 acc(data, tri, axis, spuriousDef, nonwearDef, minWear,
-    patype, pacut, boutsize, tolerance)
+    patype, pacut, epoch, boutsize, tolerance)
 }
-
 
 
 \arguments{
@@ -23,6 +22,7 @@ acc(data, tri, axis, spuriousDef, nonwearDef, minWear,
   \item{minWear}{Minimum wear time definition. Defined as minutes of wear time. or example, if minWear = 600, this means that a day will be considered valid only if the wear time is at least 600 minutes. Default is minWear = 600. To return summary for all dates in the data, set minWear = 0.}       
   \item{patype}{Types of physical activity for summary. For example, to summarize sedentary and moderate-vigorous physical activities, user specifies patype=c(`Sedentary',`MVPA'). This labels the summary accordingly.}
   \item{pacut}{Cut points to be used for the physical activity type. For example, if the user specified patype=c(`Sedentary',`MVPA'), pacut can be specified as pacut=c(c(0,99),c(1952,Inf)). The options requires to have a lower and a upper limit for each activity type (i.e. c(0,99) for sedentary activity). The specified interval includes its lower and upper endpoints (it is a closed interval). }
+  \item{epoch}{Epoch size. Default is '1 min'. Other epoch size can be specified using this option (e.g., '1 sec')}
   \item{boutsize}{Boutsize to summarize a physical activity. If multiple patype is specified, boutsize should be specified for each one (e.g., if patype=c(`Sedentary',`MVPA') then one can use  boutsize=c(10,10)).}
   \item{tolerance}{Whether two observations outside the physical activity should be permitted in summarizing a physical activity. If multiple patype is specified, tolerance should be for each one (e.g. if patype=c(`Sedentary',`MVPA') then one can use tolerance=c(`FALSE',`TRUE')).}
 }
@@ -55,7 +55,7 @@ Copeland, J. L., and Esliger, D. W. (2009). Accelerometer assessment of physical
 library(acc)
 infile <- "CountsDataName.dat"
 counts <- readCounts(infile)
-}
+
 
 ##
 ## Example: Summarizing accelerometer data for a sedentary individual
@@ -114,4 +114,5 @@ summary2 <- acc(data=counts, tri='FALSE', axis=NULL,
                      boutsize=c(10,10), tolerance=c('FALSE','TRUE'))
 summary2
 
+}
 }

@@ -4,6 +4,10 @@
 #' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
 #' @importFrom zoo rollmean rollsum rollmedian
 #' @importFrom PhysicalActivity dataCollapser
+#' @importFrom Rcpp evalCpp
+#' @useDynLib acc
+
+
 aggAcc <- function(path){
   
   myfilenames <- list.files(path = path)

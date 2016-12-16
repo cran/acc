@@ -35,7 +35,7 @@ Jaejoon Song <jjsong2@mdanderson.org>
 ##
 ## Example
 ##
-# filepath to locate the raw accelerometer files
+# filepath to locate the activity counts data files
 \dontrun{
 mypath <- "C:/Accelerometry files"
 readCountsBatch(mypath,filetype='csv')

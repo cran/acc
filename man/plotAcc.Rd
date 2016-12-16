@@ -26,11 +26,11 @@ Jaejoon Song <jjsong2@mdanderson.org>
 \keyword{ accelerometer }
 
 \examples{
-
+\dontrun{
 ##
 ## Example: Simulate a dataset for two days, for an individual with low MVPA level.
 ##
-mvpaLowData <- simAcc(minutes=(60*24*2),mvpaLevel='low')
+mvpaLowData <- simAcc(timelength=(60*24*2),paLevel='low')
 summary <- accSummary(data=mvpaLowData)
 summary$validDates
 plotAcc(summary,markbouts='FALSE')
@@ -38,35 +38,29 @@ plotAcc(summary,markbouts='FALSE')
 ##
 ## Example: Simulate a dataset for two days, for an individual with moderate MVPA level.
 ##
-mvpaModData <- simAcc(minutes=(60*24*2),mvpaLevel='moderate')
+mvpaModData <- simAcc(timelength=(60*24*2),paLevel='moderate')
 summary <- accSummary(data=mvpaModData, tri='FALSE', axis=NULL,
              spuriousDef=20, nonwearDef=60, minWear=600, 
              patype='MVPA',pacut=c(1952,Inf), boutsize=10, 
              tolerance='TRUE', returnbout='TRUE')
 summary$validDates
-\dontrun{
 plotAcc(summary,markbouts='FALSE')
-}
 
 ##
 ## Example: Simulate a dataset for two days, for an individual with high MVPA level.
 ##
-\dontrun{
-mvpaHighData <- simAcc(minutes=(60*24*2),mvpaLevel='high')
+mvpaHighData <- simAcc(timelength=(60*24*2),paLevel='high')
 summary <- accSummary(data=mvpaHighData, tri='FALSE', axis=NULL,
              spuriousDef=20, nonwearDef=60, minWear=600, 
              patype='MVPA',pacut=c(1952,Inf), boutsize=10, 
              tolerance='TRUE', returnbout='TRUE')
 summary$validDates
-
 plotAcc(summary,markbouts='FALSE')
-}
 
 
 ##
 ## Example: Simulate a tri-axial dataset for five days.
 ##
-\dontrun{
   library(acc)
   library(mhsmm)
   seedset=1234
@@ -106,6 +100,5 @@ summary$validDates
 
 plotAcc(summary,markbouts='FALSE')
 }
-
 
 }

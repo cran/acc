@@ -2,11 +2,14 @@
 #' @importFrom utils head tail 
 #' @importFrom graphics par axis title plot rect legend
 #' @importFrom mhsmm simulate.hmmspec hmmspec dnorm.hsmm rnorm.hsmm
-#' @importFrom zoo rollmean rollsum rollmedian
 #' @importFrom PhysicalActivity dataCollapser
+#' @importFrom Rcpp evalCpp
+#' @useDynLib acc
+
 accBatch <- function(path, tri='TRUE', axis='vm',
                      spuriousDef=20, nonwearDef=60, minWear=600, 
                      patype=c('Sedentary','MVPA'),pacut=c(c(0,99),c(1952,Inf)), 
+                     epoch=c('1 min','1 min'),
                      boutsize=c(10,10), tolerance=c('FALSE','TRUE')){
   
   myfilenames <- list.files(path = path)
@@ -27,13 +30,13 @@ accBatch <- function(path, tri='TRUE', axis='vm',
       if(ncol(counts)==4){
       summarized <- acc(data = counts, tri=tri, axis=axis,
                         spuriousDef=spuriousDef, nonwearDef=nonwearDef, minWear=minWear, 
-                        patype=patype,pacut=pacut, 
+                        patype=patype,pacut=pacut,epoch=epoch,
                         boutsize=boutsize, tolerance=tolerance)
       }
       if(ncol(counts)!=4){
         summarized <- acc(data = counts, tri='FALSE', axis=NULL,
                           spuriousDef=spuriousDef, nonwearDef=nonwearDef, minWear=minWear, 
-                          patype=patype,pacut=pacut, 
+                          patype=patype,pacut=pacut,epoch=epoch,
                           boutsize=boutsize, tolerance=tolerance)
       }
       summary <- merge(person, summarized)
